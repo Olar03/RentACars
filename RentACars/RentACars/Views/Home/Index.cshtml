@@ -1,0 +1,57 @@
+﻿
+@model RentACars.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<style type="text/css">
+    .card {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 1px solid lightgray;
+        box-shadow: 2px 2px 8px 4px #d3d3d3d1;
+        border-radius: 15px;
+        font-family: sans-serif;
+        margin: 5px;
+    }
+</style>
+
+@if(Model.Quantity > 0)
+{
+    <a asp-action="ShowCart" class="btn btn-outline-primary">Ver Reservas (@Model.Quantity)</a>
+}
+
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+    @if (Model.Vehicles.Count() > 0)
+    {
+        @foreach (var item in Model.Vehicles)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <div class="text-center zoom">
+                        <img src="@item.ImageFullPath" style="height:150px; max-width:200px; border-radius:50%;" class="text-center" alt=@item.Plaque />
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title text-navy"> @item.Serie</h5>
+                        <p class="card-text smfnt">@item.Brand</p>
+                        <h5 class="text-navy ">@Html.DisplayFor(modelItem => item.Plaque)</h5>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
+                        <a asp-action="Add" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h3>No hay Vehiculos con su criterio de búsqueda</h3>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

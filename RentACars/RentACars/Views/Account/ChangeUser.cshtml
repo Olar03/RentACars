@@ -1,0 +1,42 @@
+﻿@model RentACars.Models.EditUserViewModel
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<flash dismissable="true" />
+
+<hr />
+<div class="row">
+    <div class="calign-items-2  offset-md-2">
+        <div class="card bg-light mb-4" style="width: 850px; height: 550px">
+            <h5 class="card-header text-center"><i class="fa-solid fa-user-gear"></i> Editar Usuario</h5>
+            <div class="card-body bg-info bg-gradient p-2 text-dark bg-opacity-75">
+                <form asp-action="ChangeUser" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="ImageId" />
+                    <input type="hidden" asp-for="DocumentTypes" />
+                    <input type="hidden" asp-for="LicenceTypes" />
+
+                    <div class="text-center zoom">
+                        <img src="@Model.ImageFullPath" style="width:200px;height:200px;border-radius:50%;" />
+                    </div>
+                    <partial name="_User" />
+                    <div class="form-group mt-2 text-center">
+                        <button input type="submit" value="ChangeUser" class="btn btn-primary btn-block"><i class="fa-solid fa-user-pen"></i>Guardar</button>
+                        <a asp-action="ChangePassword" class="btn btn-outline-secondary"><i class="fa-solid fa-key"></i>Cambiar Contraseña</a>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer bg-transparent">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+        @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+        }
