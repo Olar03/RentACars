@@ -17,7 +17,7 @@ body {
     margin-bottom: 60px;
    
 }
-
+/* Carrusel Imagenes*/
 .carousel-inner {
     width: auto;
     height: 500px;
@@ -91,4 +91,3 @@ body {
         z-index: 1;
         content: ""
     }
-

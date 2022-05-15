@@ -56,7 +56,8 @@ namespace RentACars.Controllers
                     Plaque = model.Plaque,
                     Brand = model.Brand,
                     Serie = model.Serie,
-                    Remarks = model.Remarks
+                    PriceDay = model.PriceDay,
+                    Description = model.Description
                 };
 
                 vehicle.VehicleCategories = new List<VehicleCategory>()
@@ -123,7 +124,8 @@ namespace RentACars.Controllers
                 Id = vehicle.Id,
                 Brand = vehicle.Brand,
                 Serie = vehicle.Serie,
-                Remarks = vehicle.Remarks
+                PriceDay = vehicle.PriceDay,
+                Description = vehicle.Description
             };
 
             return View(model);
@@ -143,7 +145,8 @@ namespace RentACars.Controllers
                 vehicle.Plaque = model.Plaque;
                 vehicle.Brand = model.Brand;
                 vehicle.Serie = model.Serie;
-                vehicle.Remarks = model.Remarks;
+                vehicle.PriceDay = model.PriceDay;
+                vehicle.Description = model.Description;
                 _context.Update(vehicle);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

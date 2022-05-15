@@ -16,6 +16,7 @@ namespace RentACars.Data
         public DbSet<VehicleCategory> VehicleCategories { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<LicenceType> LicenceTypes { get; set; }
+        public DbSet<TemporalReserve> TemporalReserves { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,6 +26,8 @@ namespace RentACars.Data
             modelBuilder.Entity<VehicleCategory>().HasIndex("VehicleId", "CategoryId").IsUnique();
             modelBuilder.Entity<DocumentType>().HasIndex(d => d.Name).IsUnique();
             modelBuilder.Entity<LicenceType>().HasIndex(l => l.Name).IsUnique();
+            modelBuilder.Entity<TemporalReserve>().HasIndex(tr => tr.Id).IsUnique();
+
 
         }
     }

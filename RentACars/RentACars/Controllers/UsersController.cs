@@ -101,8 +101,7 @@ namespace RentACars.Controllers
             return View(model);
         }
 
-
-     
+         
 
 
 

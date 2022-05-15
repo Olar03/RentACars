@@ -1,15 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using RentACars.Data.Entities;
+using System.ComponentModel.DataAnnotations;
 
-namespace RentACars.Data.Entities
+namespace RentACars.Models
 {
-    public class TemporalReserve
+    public class EditTemporalReserveViewModel
     {
-        public int Id { get; set; }
-
-        public User User { get; set; }
-
-        public Vehicle Vehicle { get; set; }
 
         [DataType(DataType.MultilineText)]
         [Display(Name = "Comentarios")]
@@ -24,12 +19,6 @@ namespace RentACars.Data.Entities
         [Display(Name = "Fecha final reserva")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime ReturnDate { get; set; }
-
-        [Column(TypeName = "decimal(18,2)")]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
-        [Display(Name = "Valor")]
-        public decimal Value => Vehicle == null ? 0 : (decimal)(ReturnDate - DeliveryDate).Days * Vehicle.PriceDay;
-
 
     }
 }

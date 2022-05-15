@@ -30,7 +30,7 @@
     @Html.DisplayNameFor(model => model.Serie)
     </th>
     <th>
-    @Html.DisplayNameFor(model => model.Remarks)
+    @Html.DisplayNameFor(model => model.Description)
     </th>
     <th>
     @Html.DisplayNameFor(model => model.CategoriesNumber)
@@ -58,7 +58,7 @@
     @Html.DisplayFor(modelItem => item.Serie)
     </td>
     <td>
-    @Html.DisplayFor(modelItem => item.Remarks)
+    @Html.DisplayFor(modelItem => item.Description)
     </td>
     <td>
     @Html.DisplayFor(modelItem => item.CategoriesNumber)
@@ -119,7 +119,8 @@
                         <div class="card-body text">
                             <p class="card-text smfnt">Serie:   @item.Serie</p>
                             <p class="card-text smfnt">Marca:   @item.Brand</p>
-                            <p class="card-text smfnt">Observaciones:    @item.Remarks</p>
+                            <p class="card-text smfnt">Valor Diario:   @item.PriceDay</p>
+                            <p class="card-text smfnt">Descripción:    @item.Description</p>
                             <p class="card-text smfnt">Categorías:    @item.CategoriesNumber</p>
                             <p class="card-text smfnt">Fotos:    @item.ImagesNumber</p>
                         </div>

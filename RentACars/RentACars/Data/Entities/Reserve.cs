@@ -7,25 +7,22 @@ namespace RentACars.Data.Entities
     {
         public int Id { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-        [Display(Name = "Fecha")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime DeliveryDate { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-        [Display(Name = "Fecha")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime ReturnDate { get; set; }
-
         public User User { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
+        [Display(Name = "Fecha")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateTime Date { get; set; }
+
         [Display(Name = "Estado")]
-        public ReserveStatus MyProperty { get; set; }
+        public ReserveStatus ReserveStatus { get; set; }
 
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Comentarios")]
-        public string? Remarks { get; set; }
+        public ICollection<TemporalReserve> TemporalReserves { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [Display(Name = "Valor")]
+        public decimal Value => TemporalReserves == null ? 0 : TemporalReserves.Sum(tr => tr.Value);
 
     }
+
 }

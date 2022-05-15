@@ -47,6 +47,7 @@ namespace RentACars.Controllers
             return View();
         }
 
+        /*Error*/
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -59,6 +60,7 @@ namespace RentACars.Controllers
             return View();
         }
 
+        /*Add Productos home*/
         public async Task<IActionResult> Add(int? id)
         {
             if (id == null)
@@ -95,78 +97,77 @@ namespace RentACars.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
 
-        //    Vehicle vehicle = await _context.Vehicles
-        //        .Include(i => i.ImageVehicles)
-        //        .Include(c => c.VehicleCategories)
-        //        .ThenInclude(vc => vc.Category)
-        //        .FirstOrDefaultAsync(v => v.Id == id);
-        //    if (vehicle == null)
-        //    {
-        //        return NotFound();
-        //    }
+            Vehicle vehicle = await _context.Vehicles
+                .Include(i => i.ImageVehicles)
+                .Include(c => c.VehicleCategories)
+                .ThenInclude(vc => vc.Category)
+                .FirstOrDefaultAsync(v => v.Id == id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
 
-        //    string categories = string.Empty;
-        //    foreach (VehicleCategory? category in vehicle.VehicleCategories)
-        //    {
-        //        categories += $"{category.Category.Name}, ";
-        //    }
-        //    categories = categories.Substring(0, categories.Length - 2);
+            string categories = string.Empty;
+            foreach (VehicleCategory category in vehicle.VehicleCategories)
+            {
+                categories += $"{category.Category.Name}, ";
+            }
+            categories = categories.Substring(0, categories.Length - 2);
 
-        //    AddProductToCartViewModel model = new()
-        //    {
-        //        Categories = categories,
-        //        Description = vehicle.Description,
-        //        Id = vehicle.Id,
-        //        Name = vehicle.Name,
-        //        Price = vehicle.Price,
-        //        ProductImages = vehicle.ProductImages,
-        //        Quantity = 1,
-        //        Stock = vehicle.Stock,
-        //    };
+            AddVehicleToReserveViewModel model = new()
+            {
+                Categories = categories,
+                Description = vehicle.Description,
+                Id = vehicle.Id,
+                Brand = vehicle.Brand,
+                Serie = vehicle.Serie,
+                PriceDay = vehicle.PriceDay,
+                ImageVehicles = vehicle.ImageVehicles,
+            };
 
-        //    return View(model);
-        //}
+            return View(model);
+        }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Details(AddProductToCartViewModel model)
-        //{
-        //    if (!User.Identity.IsAuthenticated)
-        //    {
-        //        return RedirectToAction("Login", "Account");
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(AddVehicleToReserveViewModel model)
+        {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-        //    Product product = await _context.Products.FindAsync(model.Id);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
+            Vehicle vehicle = await _context.Vehicles.FindAsync(model.Id);
+            if (vehicle == null)
+            {
+                return NotFound();
+            }
 
-        //    User user = await _userHelper.GetUserAsync(User.Identity.Name);
-        //    if (user == null)
-        //    {
-        //        return NotFound();
-        //    }
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    TemporalSale temporalSale = new()
-        //    {
-        //        Product = product,
-        //        Quantity = model.Quantity,
-        //        Remarks = model.Remarks,
-        //        User = user
-        //    };
+            //TemporalSale temporalSale = new()
+            //{
+            //    Product = product,
+            //    Quantity = model.Quantity,
+            //    Remarks = model.Remarks,
+            //    User = user
+            //};
 
-        //    _context.TemporalSales.Add(temporalSale);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+            //_context.TemporalSales.Add(temporalSale);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
 
 
     }

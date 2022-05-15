@@ -56,5 +56,6 @@ namespace RentACars.Data.Entities
         [Display(Name = "Usuario")]
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
 
+        public ICollection<Reserve> Reserves { get; set; }
     }
 }

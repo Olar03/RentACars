@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+/*Conexión base de datos y datacontext*/
 builder.Services.AddDbContext<DataContext>(o =>
 {
     o.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -21,6 +22,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = "/Account/NotAuthorized";
 });
 
+/*inyección de entidades*/
 builder.Services.AddTransient<SeedDb>();
 builder.Services.AddFlashMessage();
 builder.Services.AddScoped<ICombosHelper, CombosHelper>();
@@ -30,7 +32,7 @@ builder.Services.AddScoped<IMailHelper, MailHelper>();
 builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 
 
-/*Manejo de usuarios*/
+/*inyección de usuarios*/
 builder.Services.AddIdentity<User, IdentityRole>(cfg =>
 {
     cfg.Tokens.AuthenticatorTokenProvider = TokenOptions.DefaultAuthenticatorProvider;
@@ -48,7 +50,7 @@ builder.Services.AddIdentity<User, IdentityRole>(cfg =>
         .AddDefaultTokenProviders()
         .AddEntityFrameworkStores<DataContext>();
 
-
+/*Inyección de base de datos*/
 var app = builder.Build();
 SeedData();
 

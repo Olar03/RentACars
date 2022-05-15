@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RentACars.Migrations
 {
-    public partial class IniDbRent : Migration
+    public partial class DbInicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -71,6 +71,7 @@ namespace RentACars.Migrations
                     Brand = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Serie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Plaque = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    PriceDay = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Remarks = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true)
                 },
                 constraints: table =>
@@ -271,6 +272,59 @@ namespace RentACars.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Reserve",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReserveStatus = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reserve", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reserve_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TemporalReserve",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    VehicleId = table.Column<int>(type: "int", nullable: true),
+                    Comments = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DeliveryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReturnDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ReserveId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TemporalReserve", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TemporalReserve_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TemporalReserve_Reserve_ReserveId",
+                        column: x => x.ReserveId,
+                        principalTable: "Reserve",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_TemporalReserve_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id");
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -345,6 +399,26 @@ namespace RentACars.Migrations
                 filter: "[Name] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reserve_UserId",
+                table: "Reserve",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporalReserve_ReserveId",
+                table: "TemporalReserve",
+                column: "ReserveId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporalReserve_UserId",
+                table: "TemporalReserve",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TemporalReserve_VehicleId",
+                table: "TemporalReserve",
+                column: "VehicleId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_VehicleCategories_CategoryId",
                 table: "VehicleCategories",
                 column: "CategoryId");
@@ -384,19 +458,25 @@ namespace RentACars.Migrations
                 name: "ImageVehicles");
 
             migrationBuilder.DropTable(
+                name: "TemporalReserve");
+
+            migrationBuilder.DropTable(
                 name: "VehicleCategories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Reserve");
 
             migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "Vehicles");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "DocumentTypes");
