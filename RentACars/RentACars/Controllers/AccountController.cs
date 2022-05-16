@@ -130,8 +130,8 @@ namespace RentACar.Controllers
                 Response response = _mailHelper.SendMail(
                     $"{model.FirstName} {model.LastName}",
                     model.Username,
-                    "Shopping - Confirmación de Email",
-                    $"<h1>Shopping - Confirmación de Email</h1>" +
+                    "RentAcar - Confirmación de Email",
+                    $"<h1>RentAcar - Confirmación de Email</h1>" +
                         $"Para habilitar el usuario por favor hacer clicn en el siguiente link:, " +
                         $"<p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)
@@ -144,7 +144,7 @@ namespace RentACar.Controllers
 
             }
 
-            return View(model);
+            return RedirectToAction(nameof(Login));
         }
 
 
@@ -298,8 +298,8 @@ namespace RentACar.Controllers
                 _mailHelper.SendMail(
                     $"{user.FullName}",
                     model.Email,
-                    "Shopping - Recuperación de Contraseña",
-                    $"<h1>Shopping - Recuperación de Contraseña</h1>" +
+                    "RentAcar - Recuperación de Contraseña",
+                    $"<h1>RentAcar - Recuperación de Contraseña</h1>" +
                     $"Para recuperar la contraseña haga click en el siguiente enlace:" +
                     $"<p><a href = \"{link}\">Reset Password</a></p>");
                 ViewBag.Message = "Las instrucciones para recuperar la contraseña han sido enviadas a su correo.";
@@ -359,8 +359,8 @@ namespace RentACar.Controllers
                 Response response = _mailHelper.SendMail(
                     $"{model.FirstName} {model.LastName}",
                     model.Username,
-                    "Shopping - Confirmación de Email",
-                    $"<h1>Shopping - Confirmación de Email</h1>" +
+                    "RentAcar - Confirmación de Email",
+                    $"<h1>RentAcar - Confirmación de Email</h1>" +
                         $"Para habilitar el usuario por favor hacer click en el siguiente link:, " +
                         $"<p><a href = \"{tokenLink}\">Confirmar Email</a></p>");
                 if (response.IsSuccess)

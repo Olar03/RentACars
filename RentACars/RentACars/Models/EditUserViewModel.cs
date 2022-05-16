@@ -42,7 +42,7 @@ namespace RentACars.Models
             ? $"https://localhost:7203/image/NoImage.png"
             : $"https://rentacar1.blob.core.windows.net/users/{ImageId}";
 
-        [Display(Name = "Image")]
+        [Display(Name = "Imagen")]
         public IFormFile? ImageFile { get; set; }
 
 
@@ -50,13 +50,13 @@ namespace RentACars.Models
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar un tipo de licencia.")]
         public int? LicenceTypeId { get; set; }
 
-        public IEnumerable<SelectListItem> LicenceTypes { get; set; }
+        public IEnumerable<SelectListItem>? LicenceTypes { get; set; }
 
 
         [Display(Name = "Tipo de documento")]
         [Range(1, int.MaxValue, ErrorMessage = "Debes de seleccionar tipo de Documento.")]
         public int? DocumentTypeId { get; set; }
 
-        public IEnumerable<SelectListItem> DocumentTypes { get; set; }
+        public IEnumerable<SelectListItem>? DocumentTypes { get; set; }
     }
 }

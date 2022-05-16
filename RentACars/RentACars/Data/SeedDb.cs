@@ -11,6 +11,7 @@ namespace RentACars.Data
         private readonly DataContext _context;
         private readonly IUserHelper _userHelper;
         private readonly IBlobHelper _blobHelper;
+
         public SeedDb(DataContext context, IUserHelper userHelper, IBlobHelper blobHelper)
         {
             _context = context;

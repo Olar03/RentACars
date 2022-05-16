@@ -59,7 +59,7 @@ namespace RentACars.Helpers
 
         public async Task<IEnumerable<SelectListItem>> GetComboDocumenTypeAsync()
         {
-            List<SelectListItem> list = await _context.DocumentTypes.Select(d => new SelectListItem
+            List<SelectListItem>? list = await _context.DocumentTypes.Select(d => new SelectListItem
             {
                 Text = d.Name,
                 Value = d.Id.ToString()
@@ -78,7 +78,7 @@ namespace RentACars.Helpers
 
         public async Task<IEnumerable<SelectListItem>> GetComboLicenceTypesAsync()
         {
-            List<SelectListItem> list = await _context.LicenceTypes.Select(l => new SelectListItem
+            List<SelectListItem>? list = await _context.LicenceTypes.Select(l => new SelectListItem
             {
                 Text = l.Name,
                 Value = l.Id.ToString()

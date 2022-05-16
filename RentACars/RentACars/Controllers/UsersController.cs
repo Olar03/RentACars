@@ -98,7 +98,7 @@ namespace RentACars.Controllers
 
             model.DocumentTypes = await _combosHelper.GetComboDocumenTypeAsync();
             model.LicenceTypes = await _combosHelper.GetComboLicenceTypesAsync();
-            return View(model);
+            return RedirectToAction(nameof(Index));
         }
 
          
