@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RentACars.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RentACars.Data.Entities
@@ -16,12 +17,16 @@ namespace RentACars.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Serie { get; set; }
-        
+
+        [Display(Name = "Estado")]
+        public VehicleStatus VehicleStatus { get; set; }
+
 
         [Display(Name = "Placa")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Plaque { get; set; }
+
 
         [Column(TypeName = "decimal(18,2)")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
@@ -49,5 +54,7 @@ namespace RentACars.Data.Entities
             ? $"https://https://localhost:7203/images/noimage.png"
             : ImageVehicles.FirstOrDefault().ImageFullPath;
 
+
+        public ICollection<ReserveDetail> ReserveDetails { get; set; }
     }
 }

@@ -12,14 +12,14 @@ using RentACars.Data;
 namespace RentACars.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220515223735_dbone")]
-    partial class dbone
+    [Migration("20220523015206_DbInic")]
+    partial class DbInic
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.4")
+                .HasAnnotation("ProductVersion", "6.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -249,6 +249,9 @@ namespace RentACars.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
@@ -262,10 +265,10 @@ namespace RentACars.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Reserve");
+                    b.ToTable("Reserves");
                 });
 
-            modelBuilder.Entity("RentACars.Data.Entities.TemporalReserve", b =>
+            modelBuilder.Entity("RentACars.Data.Entities.ReserveDetail", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -285,6 +288,35 @@ namespace RentACars.Migrations
                     b.Property<DateTime>("ReturnDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("VehicleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReserveId");
+
+                    b.HasIndex("VehicleId");
+
+                    b.ToTable("ReserveDetails");
+                });
+
+            modelBuilder.Entity("RentACars.Data.Entities.TemporalReserve", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -292,11 +324,6 @@ namespace RentACars.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Id")
-                        .IsUnique();
-
-                    b.HasIndex("ReserveId");
 
                     b.HasIndex("UserId");
 
@@ -441,6 +468,9 @@ namespace RentACars.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("VehicleStatus")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("Plaque")
@@ -543,12 +573,23 @@ namespace RentACars.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("RentACars.Data.Entities.TemporalReserve", b =>
+            modelBuilder.Entity("RentACars.Data.Entities.ReserveDetail", b =>
                 {
-                    b.HasOne("RentACars.Data.Entities.Reserve", null)
-                        .WithMany("TemporalReserves")
+                    b.HasOne("RentACars.Data.Entities.Reserve", "Reserve")
+                        .WithMany("ReserveDetails")
                         .HasForeignKey("ReserveId");
 
+                    b.HasOne("RentACars.Data.Entities.Vehicle", "Vehicle")
+                        .WithMany("ReserveDetails")
+                        .HasForeignKey("VehicleId");
+
+                    b.Navigation("Reserve");
+
+                    b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("RentACars.Data.Entities.TemporalReserve", b =>
+                {
                     b.HasOne("RentACars.Data.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
@@ -565,11 +606,11 @@ namespace RentACars.Migrations
             modelBuilder.Entity("RentACars.Data.Entities.User", b =>
                 {
                     b.HasOne("RentACars.Data.Entities.DocumentType", "DocumentType")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("DocumentTypeId");
 
                     b.HasOne("RentACars.Data.Entities.LicenceType", "LicenceType")
-                        .WithMany("Users")
+                        .WithMany()
                         .HasForeignKey("LicenceTypeId");
 
                     b.Navigation("DocumentType");
@@ -597,19 +638,9 @@ namespace RentACars.Migrations
                     b.Navigation("VehicleCategories");
                 });
 
-            modelBuilder.Entity("RentACars.Data.Entities.DocumentType", b =>
-                {
-                    b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("RentACars.Data.Entities.LicenceType", b =>
-                {
-                    b.Navigation("Users");
-                });
-
             modelBuilder.Entity("RentACars.Data.Entities.Reserve", b =>
                 {
-                    b.Navigation("TemporalReserves");
+                    b.Navigation("ReserveDetails");
                 });
 
             modelBuilder.Entity("RentACars.Data.Entities.User", b =>
@@ -620,6 +651,8 @@ namespace RentACars.Migrations
             modelBuilder.Entity("RentACars.Data.Entities.Vehicle", b =>
                 {
                     b.Navigation("ImageVehicles");
+
+                    b.Navigation("ReserveDetails");
 
                     b.Navigation("VehicleCategories");
                 });

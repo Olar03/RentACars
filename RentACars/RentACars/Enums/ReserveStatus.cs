@@ -3,9 +3,8 @@
     public enum ReserveStatus
     {
         Nuevo,
-        Entregado,
-        Enviado,
-        Confirmado,
-        Cancelado
+        Confirmada,
+        finalizada,
+        Cancelada
     }
 }

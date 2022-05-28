@@ -25,23 +25,22 @@ namespace RentACars.Data
             await CheckRolesAsync();
             await CheckCategoriesAsync();
             await CheckVehiclesAsync();
-            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", "Admin.jpg", UserType.Admin);
-            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", "User.JPG", UserType.User);
             await CheckLicenceTypesAsync();
             await CheckDocumentTypeAsync();
+            await CheckUserAsync("1035442878", "Luis", "Higuita", "prueba@yopmail.com", "300434061", "Cr54-32", "Admin.jpg", UserType.Admin);
+            await CheckUserAsync("3002340561", "Eduardo", "Espitia", "user@yopmail.com", "3002340561", "Cr343-212", "User.JPG", UserType.User);
         }
 
 
         private async Task<User> CheckUserAsync(
-        string document,
-        string firstName,
-        string lastName,
-        string email,
-        string phone,
-        string address,
-        string image,
-        UserType userType)
-
+            string document,
+            string firstName,
+            string lastName,
+            string email,
+            string phone,
+            string address,
+            string image,
+            UserType userType)
         {
             User user = await _userHelper.GetUserAsync(email);
             if (user == null)
@@ -192,46 +191,7 @@ namespace RentACars.Data
             _context.Vehicles.Add(vehicle);
         }
 
-        //private async Task CheckReservesAsync()
-        //{
-        //    if (!_context.Reserves.Any())
-        //    {
-        //        _context.Reserves.Add(new Reserve
-        //        {
-        //            DateReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            DateStartReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            DateFinishReserve = new System.DateTime(2015, 3, 10, 2, 15, 10),
-        //            PlaceFinishReserve = "Floresta",
-        //            StartReserve = true,
-        //            Rentals = new List<Rental>()
-        //            {
-        //                new Rental
-        //                {
-        //                    Name = "mILLER",
-        //                    Quantity = 1212,
-        //                    TotalValue = 122,
-        //                    PaymentType = "tajerta",
-        //                    RentalTypes = new List<RentalType>()
-        //                    {
-        //                        new RentalType {Name ="kilometros "},
-        //                    }
-        //                },
-        //                new Rental
-        //                {   Name = "henry",
-        //                    Quantity = 222,
-        //                    TotalValue = 22,
-        //                    PaymentType = "efectivo",
-        //                    RentalTypes = new List<RentalType>()
-        //                    {
-        //                        new RentalType {Name ="tiempo"},
-        //                    }
-        //                }
-        //            }
-        //        });
-
-        //        await _context.SaveChangesAsync();
-        //    }
-        //}
+     
 
 
     }

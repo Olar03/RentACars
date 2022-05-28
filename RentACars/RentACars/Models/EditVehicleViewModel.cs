@@ -34,7 +34,6 @@ namespace RentACars.Models
         public string Description { get; set; }
 
 
-
     }
 }
 

@@ -1,4 +1,5 @@
 ﻿using RentACars.Data.Entities;
+using RentACars.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,12 +7,16 @@ namespace RentACars.Models
 {
     public class AddVehicleToReserveViewModel
     {
+     
         public int Id { get; set; }
 
         [Display(Name = "Marca")]
         [MaxLength(20, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public string Brand { get; set; }
+
+        [Display(Name = "Estado")]
+        public VehicleStatus VehicleStatus { get; set; }
 
         [Display(Name = "Serie")]
         [MaxLength(50, ErrorMessage = "El campo {0} debe tener maximo {1} caracteres")]
@@ -37,9 +42,10 @@ namespace RentACars.Models
         [MaxLength(500, ErrorMessage = "El campo {0} debe tener máximo {1} caractéres.")]
         public string Description { get; set; }        
 
-
         public ICollection<ImageVehicle> ImageVehicles { get; set; }
 
-
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        public string Remarks { get; set; }
     }
 }

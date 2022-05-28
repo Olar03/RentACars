@@ -1,29 +1,12 @@
-﻿using RentACars.Enums;
+﻿using RentACars.Data.Entities;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RentACars.Data.Entities
+namespace RentACars.Models
 {
-    public class Reserve
+    public class ReserveViewModel
     {
-        public int Id { get; set; }
 
         public User User { get; set; }
-     
-
-        [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]
-        [Display(Name = "Fecha")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public DateTime Date { get; set; }
-
-        [DataType(DataType.MultilineText)]
-        [Display(Name = "Comentarios")]
-        public string? Comments { get; set; }
-
-        [Display(Name = "Estado")]
-        public ReserveStatus ReserveStatus { get; set; }
-
-        public ICollection<ReserveDetail> ReserveDetails { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha inicio reserva")]
@@ -37,11 +20,16 @@ namespace RentACars.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DateTime ReturnDate { get; set; }
 
+        public ICollection<Reserve> Reserves { get; set; }
+
 
         [DisplayFormat(DataFormatString = "{0:C2}")]
         [Display(Name = "Valor")]
-        public decimal Value => ReserveDetails == null ? 0 : ReserveDetails.Sum(rd => rd.Value);
+        public decimal Value => Reserves == null ? 0 : Reserves.Sum(rs => rs.Value);
 
+        [DataType(DataType.MultilineText)]
+        [Display(Name = "Comentarios")]
+        public string Comments { get; set; }
+        public Vehicle Vehicle { get;  set; }
     }
-
 }

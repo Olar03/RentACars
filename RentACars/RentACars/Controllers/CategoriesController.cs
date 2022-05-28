@@ -20,7 +20,7 @@ namespace RentACars.Controllers
             _context = context;
             _flashMessage = flashMessage;
         }
-
+        
         // GET: Categories
         public async Task<IActionResult> Index()
         {

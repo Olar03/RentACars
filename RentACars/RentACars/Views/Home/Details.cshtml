@@ -4,7 +4,7 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>@Model?.Plaque</h1>
+<h1>@Model?.Serie</h1>
 
 <div class="row">
     <div class="col-md-6">
@@ -21,7 +21,7 @@
                     first = false;
                 }
             </div>
-            <a id="ImagesCarouselPrev" class="carousel-control-prev text-Dark" href="#ImagesCarousel" role="button"
+            <a id="ImagesCarouselPrev" class="carousel-control-prev" href="#ImagesCarousel" role="button"
                data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only btn btn-secondary">Anterior</span>
@@ -42,22 +42,21 @@
                 @Html.DisplayFor(model => model.Brand)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Serie)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Serie)
-            </dd>
-            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.PriceDay)
             </dt>
             <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.PriceDay)
             </dd>
             <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Plaque)
             </dt>
             <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Description)
+                @Html.DisplayFor(model => model.Plaque)
+            </dd>    <dt class="col-sm-4">
+                @Html.DisplayNameFor(model => model.Remarks)
+            </dt>
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Remarks)
             </dd>
             <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Categories)
@@ -68,9 +67,9 @@
             <div class="col-md-12">
                 <form asp-action="Details">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id"/>                  
+                    <input type="hidden" asp-for="Id"/>
                     <div class="form-group mt-2">
-                        <input type="submit" value="Reservar" class="btn btn-outline-primary" />
+                        <input type="submit" value="Agregar al Carro de Compras" class="btn btn-outline-primary" />
                         <a asp-action="Index" class="btn btn-outline-success">Regresar</a>
                     </div>
                 </form>
@@ -95,4 +94,6 @@
     });
 </script>
 }
-
+© 2022 GitHub, Inc.
+Terms
+Privacy

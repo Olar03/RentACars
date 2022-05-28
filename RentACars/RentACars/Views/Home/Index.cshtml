@@ -1,5 +1,4 @@
-﻿
-@model RentACars.Models.HomeViewModel
+﻿@model RentACars.Models.HomeViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -18,9 +17,35 @@
     }
 </style>
 
-    <a asp-action="ShowCart" class="btn btn-outline-primary">Mis Reservas (@Model.Quantity)</a>
 
-<div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+<div class="mb-2">
+    <h5>Mostrar</h5>
+    @foreach (var item in Model.Categories)
+    {
+        <span> <a href="@Url.Action("Index", "Home", new { searchString = item.Name})"> @item.Name&nbsp;</a></span>
+    }
+    <div class="mb-1">
+        <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">Ordenar por Nombre</a>&nbsp;&nbsp;
+        <a asp-action="Index" asp-route-sortOrder="@ViewData["PriceSortParm"]">Ordenar por Precio</a>
+    </div>
+</div>
+<hr />
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Buscar por nombre o categoría: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Buscar" class="btn btn-warning" />
+            <a asp-action="Index" class="btn btn-secondary">Ver Todos los Vehiculos</a>
+        </p>
+    </div>
+</form>
+
+@if (Model.Quantity > 0)
+{
+    <a asp-action="ShowReserve" class="btn btn-outline-primary">Ver reserva (@Model.Quantity)</a>
+}
+
+<div class="row row-cols-1 row-cols-md-4 g-4 mt-1 overflow-auto">
     @if (Model.Vehicles.Count() > 0)
     {
         @foreach (var item in Model.Vehicles)
@@ -28,17 +53,17 @@
             <div class="col">
                 <div class="card h-100">
                     <div class="text-center zoom">
-                        <img src="@item.ImageFullPath" style="height:150px; max-width:200px; border-radius:50%;" class="text-center"/>
+                        <img src="@item.ImageFullPath" style="height:150px; max-width:200px; border-radius:50%;" class="text-center" />
                     </div>
                     <div class="card-body">
-                        <p class="card-text smfnt">Serie:  @item.Serie</p>
-                        <p class="card-text smfnt">Marca:   @item.Brand</p>
-                        <p class="card-text smfnt">Placa:   @item.Plaque</p>
-                        <p class="card-text smfnt">Valor Diario:    @Html.DisplayFor(modelItem => item.PriceDay)</p>
+                        <p class="card-text smfnt">  @item.Serie</p>
+                        <p class="card-text smfnt">   @item.Brand</p>
+                        <p class="card-text smfnt">  @item.Plaque</p>
+                        <p class="text-muted"> @Html.DisplayFor(modelItem => item.PriceDay)</p>
                     </div>
                     <div class="card-footer text-center">
                         <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"><i class="fa-solid fa-circle-info"></i> Ver</a>
-                        <a asp-controller="Users" asp-action="ChangeUser" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
+                        <a asp-action="ShowReserve" asp-route-id="@item.Id" class="btn btn-sm btn-primary"><i class="fa-solid fa-car-side"></i>Reservar</a>
                     </div>
                 </div>
             </div>
@@ -50,6 +75,30 @@
     }
 </div>
 
+@{
+    var prevDisabled = !Model.Vehicles.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.Vehicles.HasNextPage ? "disabled" : "";
+}
+
+<div class="mt-5">
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Vehicles.PageIndex - 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-warning @prevDisabled">
+        Anterior
+    </a>
+    <a asp-action="Index"
+       asp-route-sortOrder="@ViewData["CurrentSort"]"
+       asp-route-pageNumber="@(Model.Vehicles.PageIndex + 1)"
+       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+       class="btn btn-success @nextDisabled">
+        Siguiente
+    </a>
+</div>
+
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

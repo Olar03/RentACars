@@ -43,6 +43,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
                             </li>
                         }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Reserves" asp-action="MyReserves">Mis Reservas</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
@@ -52,7 +58,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa-solid fa-gauge"></i>Cerrar Sesión</a>
-                            </li>
+                            </li>                      
                         }
                         else
                         {
